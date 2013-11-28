@@ -1,0 +1,67 @@
+//
+// LESS mixin library for generating CSS keyframes
+// @version 0.0.1
+// for less.js 1.3.1+ (http://lesscss.org/)
+//
+// Suitable for less.js or any JS-based parsers: Node.js, WinLess, etc
+// For lessphp version see keyframes_lessphp.less
+//
+// GENERATE KEYFRAMES OUTSIDE ANY PARENT SELECTORS!
+// For usage examples see usage.less
+//
+// @author Evgeni Dmitriev
+// @see https://github.com/thybzi/keyframes
+//
+.keyframes(
+    @name,        @point1:  0%, @point2: 100%,
+    @point3:  '', @point4:  '', @point5:  '', @point6:  '', @point7:  '', @point8:  '', @point9:  '',
+    @point10: '', @point11: '', @point12: '', @point13: '', @point14: '', @point15: '', @point16: ''
+) {
+    @newline:       `"\n"`;
+    @bracketClose:  '}@{newline}';
+
+    // Generates vendor-prefixed keyframes rules
+    .vendor-keyframes(@prefix: '', @prehack: @bracketClose) {
+        // Some necessary hacks to close a previous bracket (if any) and open a new one
+        @beginString:   ~'@{prehack}@@{prefix}keyframes @{name} {@{newline}@{point1}';
+        @{beginString} {
+            .keyframes-item(@name, @point1);
+        }
+        .keyframes-point(@name, @point2);
+        .keyframes-point(@name, @point3);
+        .keyframes-point(@name, @point4);
+        .keyframes-point(@name, @point5);
+        .keyframes-point(@name, @point6);
+        .keyframes-point(@name, @point7);
+        .keyframes-point(@name, @point8);
+        .keyframes-point(@name, @point9);
+        .keyframes-point(@name, @point10);
+        .keyframes-point(@name, @point11);
+        .keyframes-point(@name, @point12);
+        .keyframes-point(@name, @point13);
+        .keyframes-point(@name, @point14);
+        .keyframes-point(@name, @point15);
+        .keyframes-point(@name, @point16);
+    }
+
+    // Generates a timepoint rule, ignoring empty points as not passed to .keyframes()
+    // Applies styles provided for correspondent .keyframes-item()
+    .keyframes-point(@name, @point) when not (@point = '') {
+        @pointSelector: ~'@{point}'; // cleaning selector from possible quotes
+        @{pointSelector} {
+            .keyframes-item(@name, @point); // applying styles provided
+        }
+    }
+
+
+    // Generating keyframes rules for each vendor prefix
+    // The first call MUST pass an empty string ('') as second param
+    .vendor-keyframes('-webkit-', '');  // Chrome 3+, Safari 4.0+, Opera 15+ (still needed for versions 31, 7.0 and 17)
+    .vendor-keyframes('-moz-');         // Firefox 5 - 15
+    .vendor-keyframes('-o-');           // Opera 12.0
+    .vendor-keyframes();                // IE 10+, Firefox 16+, Opera 12.1
+
+    // Closing the final bracket (do not touch the comment magic!)
+    @globalEndString: ~'@{bracketClose}/*';
+    @{globalEndString} { magic: dont; } /* touch */
+}

@@ -1,0 +1,125 @@
+//
+// GENERATE KEYFRAMES OUTSIDE ANY PARENT SELECTORS!!
+// Keyframes must be created only on top of LESS selector tree (not inside any selector, including body and html)
+// That is a requirement for both CSS keyframes and LESS keyframes generator
+// Though, CSS animation rules using generated keyframes can be written at any level of selector tree
+//
+
+
+
+// Import the library into your LESS file:
+@import 'keyframes.less'; // for lessphp, use 'keyframes_lessphp.less' instead
+
+// For using keyframes, assuming you also have an animation LESS mixin like this:
+.animation(@value) {
+    -webkit-animation: @value;
+    -moz-animation: @value;
+    -o-animation: @value;
+    animation: @value;
+}
+
+
+
+// Example 1. Basic usage 
+
+// Preparing styles for animation points
+.keyframes-item(fadeIn, 0%) {
+    opacity: 0;
+}
+.keyframes-item(fadeIn, 100%) {
+    opacity: 1;
+}
+// Generating keyframes
+.keyframes(fadeIn);
+
+// Applying animation to fade-in block in 1.5 seconds
+.myBlock {
+    .animation(fadeIn 1.5s);
+}
+
+
+
+// Example 2. Three animation points
+
+// Now we need styles for more points
+.keyframes-item(colorChange, 0%) {
+    color: red;
+}
+.keyframes-item(colorChange, 37%) {
+    color: green;
+}
+.keyframes-item(colorChange, 100%) {
+    color: blue;
+}
+// Generating keyframes (note the timepoints other than 0%, 100% must be passed explicitly)
+.keyframes(colorChange, 0%, 37%, 100%);
+
+.parentBlock {
+    // Yes, you can APPLY (not create!) keyframes animation at any level of selectors tree
+    .colorBlock {
+        .animation(colorChange 2s);
+    }
+}
+
+
+
+// Example 3. Hold opacity at 0, then fade-in
+
+// (Assuming you've also generated fadeIn keyframes from example #1)
+
+// Note '0%, 100%' are passed as SINGLE param, and so quouted together
+// Even replacing comma with semicolon doesn't help
+.keyframes-item(holdTranparent, '0%, 100%') {
+    opacity: 0;
+}
+// Note the empty string ('') passed as second param
+.keyframes(holdTranparent, '0%, 100%', '');
+
+// Note the semicolon at the end of multiple animations list
+.wait-2s-then-appear {
+    .animation(holdTransparent 2s, fadeIn 1s 2s ease-out;);
+}
+
+
+
+// Example 4. Some crazy animation
+
+.keyframes-item(crazy, 0%) {
+    // first item cannot be empty, or keyframes could not be generated
+    font-size: 72em;
+}
+.keyframes-item(crazy, 12%) {
+    .my-mixin(round(@myVar)); // you can use mixins, functions and variables
+}
+.keyframes-item(crazy, 21%) {
+    // more
+}
+.keyframes-item(crazy, 29%) {
+    // and more
+}
+.keyframes-item(crazy, 36.6%) {
+    // you can use fractional percents (if you really want to)
+}
+.keyframes-item(crazy, 62.5%) {
+    // but anyway, it must have a percent sign!
+}
+
+// (there could be more; up to 16 timepoints in all)
+
+.keyframes-item(crazy, 100%) {
+    // finally!
+}
+
+// Generating the keyframe rules... ufff!
+.keyframes(crazy, 0%, 12%, 21%, 29%, 36.6%, 62.5%, 100%);
+
+// And applying this (and maybe more) animations at some poor element
+.crazy-jumper {
+    // (some other styles here, maybe)
+    // Repeat our crazy animation for 44 times, simultaneously fading that in for 18 times and changing colors
+    .animation(
+        crazy 10s 44,
+        fadeIn 0.9s ease-in-out 18,
+        colorChange 4.5s 2s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+    );
+}
