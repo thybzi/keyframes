@@ -3,10 +3,13 @@ keyframes.less
 
 CSS keyframes generator for LESS (http://lesscss.org/). Works with:
 
-- **less.js** 0.3.1+ and tools based on it (Node.js, WinLess, etc)
+- **less.js** 0.3.1+ and tools based on it (Node.js usage, WinLess, etc)
 - **lessphp** 0.4.0+ (http://leafo.net/lessphp/)
 
-Inspired with tools like https://github.com/kuus/animate-me.less/ and solutions like http://stackoverflow.com/a/16147018/3027390
+Inspired with tools and solutions like:
+- https://github.com/kuus/animate-me.less/
+- http://stackoverflow.com/a/16147018
+- http://stackoverflow.com/a/14853591
 
 Key features
 ------------
@@ -14,7 +17,11 @@ Key features
 - Cross-browser keyframes generation *(Firefox 5+, Chrome 3+, Safari 4+, Opera 12+, IE 10+)*
 - Up to 16 timepoints in each `keyframes` rule (and the number can be easily augmented, if needed)
 - Mixins, variables and functions can be used for styling timepoints
-- Keyframes are created separately from `animation` rules, so multiple animations can use the same keyframe with different values for timing, repeating, etc
+- Keyframes are created separately from `animation` rules, so:
+    - multiple `animation` rules can use the same keyframe with different values for timing, repeating, etc,
+    - multiple animations can be used within same `animation` rule
+    - animations can be applied (not created!) inside any parent selector
+- Lightweight and (almost) neat LESS code
 
 Current limitations
 -------------------
@@ -37,7 +44,7 @@ Usage examples (included)
 @import 'keyframes.less';
 ```
 
-For using keyframes, assuming you also have an animation LESS mixin like this (not included):
+For using keyframes, assuming you also have an animation LESS mixin like this (not included in library):
 
 ```less
 .animation(@value) {
