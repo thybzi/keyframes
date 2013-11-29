@@ -6,6 +6,8 @@ CSS keyframes generator for LESS (http://lesscss.org/). Works with:
 - **less.js** 0.3.1+ and tools based on it (Node.js, WinLess, etc)
 - **lessphp** 0.4.0+ (http://leafo.net/lessphp/)
 
+Inspired with tools like https://github.com/kuus/animate-me.less/ and solutions like http://stackoverflow.com/a/16147018/3027390
+
 Key features
 ------------
 
@@ -35,7 +37,7 @@ Usage examples (included)
 @import 'keyframes.less';
 ```
 
-For using keyframes, assuming you also have an animation LESS mixin like this:
+For using keyframes, assuming you also have an animation LESS mixin like this (not included):
 
 ```less
 .animation(@value) {
