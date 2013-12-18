@@ -17,7 +17,7 @@
     @point3:  '', @point4:  '', @point5:  '', @point6:  '', @point7:  '', @point8:  '', @point9:  '',
     @point10: '', @point11: '', @point12: '', @point13: '', @point14: '', @point15: '', @point16: ''
 ) {
-    @newline:       ' '; // cannot generate newline with phpless; but space is better than nothing :)
+    @newline:       ' '; // cannot generate newline with lessphp; but space is better than nothing :)
     @bracketClose:  '}@{newline}';
 
     // Generates vendor-prefixed keyframes rules
@@ -52,6 +52,7 @@
             .keyframes-item(@name, @point); // applying styles provided
         }
     }
+    .keyframes-point(@name, @point) when (@point = '') {} // lessphp breaks without this
 
 
     // Generating keyframes rules for each vendor prefix
